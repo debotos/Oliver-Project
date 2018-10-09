@@ -1,0 +1,60 @@
+<%include partials/header %>
+
+<div class="container">
+	<div class="dailyreviewprompt">
+
+
+		
+		<% if (user.dailyReviewComplete){ %>
+			<p class="promptText"> Daily Review complete! </p>
+		<% } else if (todaysCard.length === 0) {%>
+			<p class="promptText"> You have no words to review today. </p>
+		<% } else {%>
+			<p class="promptText"> You have <%= todaysCard.length %> words to review today. </p>
+		<% } %>
+		<!-- 	<p class="promptText">  Daily Review complete! </p> -->
+
+	</div>
+</div>
+
+<div style="display:flex;justify-content:center;">
+	<div style="overflow-x:scroll;" id="calendar-heatmap"></div>
+</div>
+
+
+
+
+<div class="container">
+	<div class="dashboardStats">
+		<table class="dashboardTable">
+			<tr>
+				<% var library = [];%>
+				<% var sum = library.reduce(function(a, b) { return a + b; }, 0); %>
+				<% wordcards.forEach(wordcard => { %>
+				<% var RFactor = wordcard.RepetitioFactor; %>
+				<% library.push(RFactor);  %>
+				<% }) %>
+				<td class="dashboardnumber">
+					<%=library.length;%>
+				</td>
+				<td class="dashboardnumber">?</td>
+				<td class="dashboardnumber">?</td>
+			</tr>
+			<tr>
+				<td class="subtitletd">Words in library</td>
+				<td class="subtitletd">Day streak</td>
+				<td class="subtitletd">Repetitio score</td>
+			</tr>
+		</table>
+
+		<!-- 		X words in library. X day streak. X active days in last year.  -->
+	</div>
+</div>
+
+
+
+
+
+
+
+<%include partials/footer %>

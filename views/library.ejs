@@ -1,0 +1,94 @@
+<%include partials/header %>
+
+<div class="content">
+    <table class="librarybox">
+      <tr>
+         <th></th>
+        <th>Word</th>
+        <th></th>
+        <th>Translation</th>
+         <th>#Memories</th>
+        <th><img class="libraryRFactor" src="public/images/favicon.ico.png"></th>
+         <th>Factor</th>
+      
+        
+      </tr>
+
+<!-- for each wordcard, push wordcard to array, order wordcards by rfactor starting at 1 down to 0, then:  -->
+
+
+
+
+        <% wordcards.forEach(wordcard => { %>
+        <% var RFactor = wordcard.RepetitioFactor; %>
+         
+
+                    <tr>
+                        
+                        <td> <img class="libraryflag" src="public/images/flags/<%=wordcard.TargetLanguage.toLowerCase()%>.png"></td>
+                        <td><p class="librarytextentry"> <%= wordcard.TargetWord %> </p> </td>
+                        <td><img class="libraryflag2" src="public/images/flags/<%=wordcard.TranslationLanguage.toLowerCase()%>.png"></td>
+                        <td><p class="librarytextentry"><%= wordcard.TranslationWord %> </p></td>
+                        <td> 
+                            <% if (wordcard.memory1 == null || undefined) { %>
+                            <p class="librarytextentry"> 0 </p>
+                            <%  } else if (wordcard.memory2 == null || undefined) { %>
+                            <p class="librarytextentry"> 1 </p>
+                            <%  } else if (wordcard.memory3 == null || undefined) { %>
+                            <p class="librarytextentry"> 2 </p>
+                            <%  } else if (wordcard.memory4 == null || undefined) { %>
+                            <p class="librarytextentry"> 3 </p>
+                            <%  } else if (wordcard.memory5 == null || undefined) { %>
+                            <p class="librarytextentry"> 4 </p>
+                            <%  } else if (wordcard.memory6 == null || undefined) { %>
+                            <p class="librarytextentry"> 5 </p>
+                            <%  } else if (wordcard.memory7 == null || undefined) { %>
+                            <p class="librarytextentry"> 6 </p>
+                            <%  } else if (wordcard.memory8 == null || undefined) { %>
+                            <p class="librarytextentry"> 7 </p>
+                            <%  } else if (wordcard.memory9 == null || undefined) { %>
+                            <p class="librarytextentry"> 8 </p>
+                            <%  } else if (wordcard.memory10 == null || undefined) { %>
+                            <p class="librarytextentry"> 9 </p>
+                            <%  }  else {%>
+                            <p class="librarytextentry"> 10 </p>
+                            <% }; %>
+                         </td>
+                         <td> </td>
+                        <td><%= wordcard.ranked %></td>
+                        
+                        <td><a href="/library/<%= wordcard._id%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+
+                        <td><%=  %></td>
+
+
+                       
+
+                    </tr>
+                <% }) %>
+                 
+
+    </table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- // a search bar
+
+
+// // when you seee a URL like reddit.com/r/cats/?old=yes&rated=no this is a form that has been sent as a GET request
+
+
+
+
+// // display in order of date added  -->
+
+<%include partials/footer %>

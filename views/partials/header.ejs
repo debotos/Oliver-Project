@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../public/stylesheet.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/style/mdl/material.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../../public/calender.css">
+
+
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript" src="../../public/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" defer src="../../public/style/mdl/material.js"></script>
+    
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="../../public/images/favicon.ico.png" />
+
+
+
+    <title>Repetitio</title>
+</head>
+
+<body>
+    <div class="headerlanding">
+        <!-- <div class="row">
+                <div class="col-xl-2 offset-xl-4 col-lg-2 offset-xl-4 col-md-2 offset-md-4 col-sm-4 offset-sm-4 col-xs-4 offset-xs-4"> -->
+        <p class="usernameattop">
+            <!-- <%=User.username%> this doesn't work -->
+        </p>
+        <!--  </div>
+            </div> -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 hidden-xs">
+                    <a href="/dashboard" class="navbar-left">
+                        <img class="repetitiologo" src="../../public/images/logo.png">
+                    </a>
+                </div>
+
+                <div class="hidden-xl hidden-lg hidden-md hidden-sm col-xs-4">
+                    <a href="/dashboard" class="navbar-left">
+                        <img class="rlogo" src="../../public/images/r.png">
+                    </a>
+                </div>
+
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 minicons">
+                    <a href="/dashboard" class="miniconA">
+                        <span class="glyphicon glyphicon-home Rpurple"></span>
+                    </a>
+                    <a href="/settings" class="miniconA">
+                        <span class="glyphicon glyphicon-cog Rpurple"></span>
+                    </a>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="row" style="padding-top: 20px;">
+                <a href="/add">
+                    <div id="navbarcolmd4" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center active-tab">
+                        <span id="navicon" class="glyphicon glyphicon-plus Rpurple NavGlyph"></span>
+                        <p class="Rpurple"> Add Word </p>
+                    </div>
+                </a>
+                <a href="/review">
+                    <div id="navbarcolmd4" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                        <% console.log(user) %>
+                        <% if (user.dailyReviewComplete){ %>
+                        <span id="navicon" class="glyphicon glyphicon-calendar Rpurple NavGlyph"></span>
+                        <% } else if (todaysCard.length === 0) {%>
+                        <span id="navicon" class="glyphicon glyphicon-calendar Rpurple NavGlyph"></span>
+                        <% } else {%>
+                        <span id="navicon">
+                            <img src="../../public/images/dailyreviewnotification2.png" style="max-height: 40px">
+                        </span>
+                        <% } %>
+
+                        <p class="Rpurple"> Daily Review </p>
+                    </div>
+                </a>
+                <a href="/library">
+                    <div id="navbarcolmd4" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                        <span id="navicon" class="glyphicon glyphicon-stats Rpurple NavGlyph"></span>
+                        <p class="Rpurple"> Word Library </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <span class="sexy_line"></span>
+
+    </div>

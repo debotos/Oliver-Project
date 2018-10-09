@@ -1,0 +1,34 @@
+<% include ./partials/publicheader %>
+
+
+
+<div class="userformcontainer"> 
+	<div class="userform">
+			<p class="userformtitle"> Create Account </p>
+			<form method="POST" action="/join">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" name="username" autocomplete="off" required  type="email">
+								<label class="mdl-textfield__label" for="word">Email</label>
+					</div>
+						<br>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" name="password" autocomplete="off" required  type="password">
+								<label class="mdl-textfield__label" for="word">Password</label>
+					</div>
+
+							<br>
+				<!-- 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" name="password" autocomplete="off"   type="password">
+								<label class="mdl-textfield__label" for="word">Repeat Password but not yet it doesn't work</label>
+					</div> -->
+
+							<br>
+					<input class="userformsubmitbutton" type="submit"> 
+			</form>
+	</div>
+
+</div>
+
+
+<% include ./partials/publicfooter %>
+

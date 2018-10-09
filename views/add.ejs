@@ -1,0 +1,61 @@
+
+<% include partials/header %>
+
+
+	<div class="content" style="position: fixed; min-height: 100%; margin-top: 50px;">
+								
+	<div class="cardcontainer">
+		<div class="wordcard">
+			<div class="wordcardcontent">
+				<form action="/add/new" method="POST" style="margin-top: -25px">
+					
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+					<input type="text" class="mdl-textfield__input" name="TargetWord" autocomplete="off" required style="color: black!important; color:black !important;">
+					<label class="mdl-textfield__label" for="word">Word</label>
+				</div>
+
+				<select name="TargetLanguage" style="background-color: transparent; border: 0px;outline: 0px; ">
+					<!-- <option value="French">French</option>
+					<option value="Spanish">Spanish</option>
+				<option value="Dutch">Dutch</option>
+					<option value="Polish">Polish</option> -->
+
+
+					<% for (var i = 0; i < user.activeLanguages.length; i++) { %>
+					<option value="<%=user.activeLanguages[i]%>">
+						<%= user.activeLanguages[i] %>
+					</option>
+					<% } %>
+					
+				</select> <br> <br>
+
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input type="text" name="TranslationWord" class="mdl-textfield__input" autocomplete="off" required>
+					<label class="mdl-textfield__label" for="translation">Translation</label>
+				</div>
+
+					
+				<select name="TranslationLanguage" style="background-color: transparent; border: 0px;outline: 0px;">
+					<option value="<%=user.nativeLanguage%>" selected><%=user.nativeLanguage%></option>
+					<% for (var i = 0; i < user.activeLanguages.length; i++) { %>
+					<option value="<%=user.activeLanguages[i]%>">
+						<%= user.activeLanguages[i] %>
+					</option>
+					<% } %>
+				</select> <br> <br>
+
+	
+					<button class="addbutton"> Add </button>
+					
+				</form>
+				
+			</div>
+		</div>
+	</div> 
+
+</div>
+
+
+
+<%include partials/footer %>

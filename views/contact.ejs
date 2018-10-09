@@ -1,0 +1,34 @@
+<% include ./partials/publicheader %>
+
+<div class="userformcontainer"> 
+	<div class="userform">
+			<p class="userformtitle"> Contact </p>
+			<form method="POST" action="mailto:henrypopiolek@gmail.com">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" name="name" autocomplete="off" required  type="text">
+									<label class="mdl-textfield__label" for="word">Name</label>
+						</div>
+				<br>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" name="email" autocomplete="off" required  type="email">
+									<label class="mdl-textfield__label" for="word">Email</label>
+						</div>
+				<br>
+					  <div class="mdl-textfield mdl-js-textfield">
+					  <textarea class="mdl-textfield__input" name="message" type="text" rows="5" ></textarea>
+					  <label class="mdl-textfield__label" for="sample5">Message</label>
+					  </div>
+				<br>
+
+				<br>
+				<button class="userformsubmitbutton" type="submit">Submit </button>
+				
+			</form>
+			<br> <br>
+	</div>
+</div>
+
+
+
+
+<% include ./partials/publicfooter %>

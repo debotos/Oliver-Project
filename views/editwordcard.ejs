@@ -1,0 +1,202 @@
+<%include partials/header %>
+
+		<div class="content">
+			<div class="full-height">
+				<div class="vertical-align-middle">
+					<div class=cardcontainer>
+						<div class="wordcard" style="margin-top: 18px;">
+							<div class="wordcardcontent">
+								<form class="editwordform" style="margin-top: -20px" action="/library/<%= wordcard._id%>?_method=PUT" method="POST">
+
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input type="text" class="mdl-textfield__input" name="TargetWord" autocomplete="off" placeholder="<%= wordcard.TargetWord %>" value="<%= wordcard.TargetWord %>">
+										<label class="mdl-textfield__label" for="word">Word</label>
+							</div>
+									<select name="TargetLanguage">
+										<option value="<%= wordcard.TargetLanguage %>"> <%= wordcard.TargetLanguage %></option>
+										<option value="English">English</option>
+										<option value="French">French</option>
+										<option value="Spanish">Spanish</option>
+										<option value="Polish">Polish</option>
+									</select> <br> <br>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" class="mdl-textfield__input" name="TranslationWord" autocomplete="off" placeholder="<%= wordcard.TranslationWord %>" value="<%= wordcard.TranslationWord%>">
+										<label class="mdl-textfield__label" for="word">Word</label>
+									</div>
+									<select name="TranslationLanguage">
+										<option value="<%= wordcard.TranslationLanguage %>"> <%= wordcard.TranslationLanguage %> </option>
+										<option value="English">English</option>
+										<option value="French">French</option>
+										<option value="Spanish">Spanish</option>
+										<option value="Polish">Polish</option>
+									</select> <br> <br>
+									<button class="editwordbuttons"> Update </button>
+								</form>
+								<form style="display: inline-block; margin-top: 15px;" method="POST" action="/library/<%=wordcard._id%>?_method=DELETE">
+									 <button class="glyphicon glyphicon-trash"> </button>
+								</form>
+							</div>
+						</div>
+					</div> 
+					<table class="infotable">
+						<tr class="infotablerow">	
+						<th>#Days Since Last Repetition</th>
+					  	<th>Scheduled Interval</th>
+					  	<th>Ease Factor</th>
+				        <th>#Repetitions</th>
+				        <th>Date Added</th>
+				        
+				    	</tr>
+				    	<tr class="infotablerow">
+				        <td><%= wordcard.daysSinceReview %></td>
+				        <td><%= wordcard.interval %></td>
+				        <td><%= wordcard.easeFactor %></td>	
+				        <td><%= wordcard.nthInterval %></td>
+				        
+				     	<td><%= wordcard.dateAdded.toDateString().substr(4,12)%></td> 
+				       	</tr>
+					</table>					
+							
+										
+				</div>
+			</div>
+							<div class="memorycontainer"> 
+								<h5 class="Memoriestitle"> Memories</h5>
+
+											<% if (wordcard.memory1 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem1/?_method=PUT" method="POST"> 
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory1" class="mdl-textfield__input" placeholder="<%= wordcard.memory1 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 
+
+											<% if (wordcard.memory2 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem2/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory2" class="mdl-textfield__input" placeholder="<%= wordcard.memory2 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory3 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem3/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory3" class="mdl-textfield__input" placeholder="<%= wordcard.memory3 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 
+											<% if (wordcard.memory4 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem4/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory4" class="mdl-textfield__input" placeholder="<%= wordcard.memory4 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory5 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem5/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory5" class="mdl-textfield__input" placeholder="<%= wordcard.memory5 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory6 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem6/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory6" class="mdl-textfield__input" placeholder="<%= wordcard.memory6 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory7 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem7/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory7" class="mdl-textfield__input" placeholder="<%= wordcard.memory7 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory8 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem8/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory8" class="mdl-textfield__input" placeholder="<%= wordcard.memory8 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory9 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem9/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory9" class="mdl-textfield__input" placeholder="<%= wordcard.memory9 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 	
+											<% if (wordcard.memory10 !== undefined || null) { %>
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/updatemem10/?_method=PUT" method="POST"> 
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory10" class="mdl-textfield__input" placeholder="<%= wordcard.memory10 %>" autocomplete="off" >
+										<label class="mdl-textfield__label" for="word"></label>
+									</div>
+												<button class="memorybutton"> + </button>
+											</form>
+									</div>	
+											<%}; %> 		
+
+									<div class="memoryformcontainer"> 
+											<form action="/library/<%= wordcard._id%>/addmemory/?_method=PUT" method="POST"> 
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input type="text" name="Memory" class="mdl-textfield__input" required autocomplete="off" >
+										<label class="mdl-textfield__label" for="word">Add Memory</label>
+									</div>
+														<button class="memorybutton"> + </button>
+											</form>
+										</div>	
+
+
+							</div>
+		</div>
+
+
+			
+
+
+
+
+
+										
+							
+
+<%include partials/footer %>

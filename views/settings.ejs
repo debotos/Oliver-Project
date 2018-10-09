@@ -1,0 +1,124 @@
+<%include partials/header %>
+
+<div class="content">
+	<div class="settingscontainer" >
+
+	<h3 style=" font-family: 'Questrial', sans-serif;">Your Repetitio</h3>
+		<p style="font-size: 16px; font-weight: 600;"> Your native langauge </p> 
+		<div class="nativelanguage">
+					
+			<form action="/user/nativelanguage" method="POST">
+
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="Dutch">
+					<img class="flagCheckbox" src="public/images/flags/dutch.png"> 
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="English">
+					<img class="flagCheckbox" src="public/images/flags/english.png">  
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="French">
+					<img class="flagCheckbox" src="public/images/flags/french.png">  
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="German">
+					<img class="flagCheckbox" src="public/images/flags/german.png">  
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="Italian">
+					<img class="flagCheckbox" src="public/images/flags/italian.png">  
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="Polish">
+					<img class="flagCheckbox" src="public/images/flags/polish.png">  
+				</label>
+				<label class="radio-inline"> 
+					<input class="flagInput" type="radio" name="nativelanguage" value="Spanish">
+					<img class="flagCheckbox" src="public/images/flags/spanish.png">  
+				</label>
+
+					  
+				<br> <br>
+
+				<p style="font-size: 16px; font-weight: 600;"> Your target languages </p> 
+						
+				<label class="checkbox-inline"> 
+					<input type="checkbox" name="language" value="Dutch">
+					<img class="flagCheckbox" src="public/images/flags/dutch.png"> 
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="English">
+					<img class="flagCheckbox" src="public/images/flags/english.png">  
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="French">
+					<img class="flagCheckbox" src="public/images/flags/french.png">  
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="German">
+					<img class="flagCheckbox" src="public/images/flags/german.png">  
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="Italian">
+					<img class="flagCheckbox" src="public/images/flags/italian.png">  
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="Polish">
+					<img class="flagCheckbox" src="public/images/flags/polish.png">  
+				</label>
+				<label class="checkbox-inline"> 
+					<input class="flagInput" type="checkbox" name="language" value="Spanish">
+					<img class="flagCheckbox" src="public/images/flags/spanish.png">  
+				</label>
+
+				<br> <br>
+
+				<p style="font-size: 16px; font-weight: 600;"> Max daily review</p> 
+						
+				<select name="maxReview">
+					<option value="10">10 words</option>
+					<option value="20">20 words</option>
+					<option value="30">30 words</option>
+					<option value="40">40 words</option>
+					<option value="50">50 words</option>
+					<option value="100">100 words</option>
+					<option value="10000" selected="">Unlimited</option>
+				</select>
+
+				
+
+				<!-- <p style="font-size: 16px; font-weight: 600;"> Memory Icon</p> 
+
+				<select name="memoryIcon">
+					<option value="10">10 words</option>
+					<option value="20">20 words</option>
+					<option value="30">30 words</option>
+					<option value="40">40 words</option>
+					<option value="50">50 words</option>
+					<option value="100">100 words</option>
+					<option value="10000" selected="">Unlimited</option>
+				</select> -->
+
+				<br>
+			  <button class="learningsubmitbutton" type="submit"> Submit </button>
+
+			</form>
+			<br> <br>
+		</div>
+
+	<h3 style=" font-family: 'Questrial', sans-serif;">Your Account</h3>
+
+
+		<form action="/logout">
+		<button type="submit"> Logout </button>
+		<br> <br> <br>
+			
+<!-- 		<form style="display: inline-block; margin-top: 15px;" method="POST" action="/settings/<%=User._id%>?_method=DELETE">
+			 <button>Delete Account </button>
+		</form> <br> <br> <br>  -->
+	<p style="font-style: italic;"> To delete your account, email info@repetitio.co </p> 
+	</div>
+</div>
+
+<%include partials/footer %>

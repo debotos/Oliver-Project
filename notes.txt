@@ -1,0 +1,20 @@
+I can schedule a CRON job or something to run the rfactor functions each night at midnight ?
+
+https://stackoverflow.com/questions/39147395/import-json-file-into-mongoose
+
+
+
+Eventually do I need to nest wordcards in users? 
+
+
+
+working 
+
+	var daysSinceReview = 2;// date.now() - this.lastReview;
+  	if (daysSinceReview > this.rFactor.intervalDays) {
+	var RepetitioFactor =  (1/2)*(this.rFactor.intervalDays/ daysSinceReview)
+}
+	else var RepetitioFactor = 1 - (1/2* daysSinceReview/this.rFactor.intervalDays)
+	return RepetitioFactor.toFixed(2)
+	
+});

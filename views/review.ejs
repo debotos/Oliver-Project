@@ -1,0 +1,291 @@
+<% include partials/header %>
+
+
+
+<div class="content">
+
+
+	<% wordcards.forEach(wordcard => { %>
+	<!-- 		this needs to be changed to <= 0.5 eventually! -->
+	<div class="card-container">
+		<div class="card">
+
+			<div class="front">
+				<img class="reviewflag" src="public/images/flags/<%=wordcard.TargetLanguage.toLowerCase()%>.png">
+				<p class="cardword">
+					<%= wordcard.TranslationWord %>
+				</p>
+
+
+				<div class="viewmemorycontainer">
+					<%	if (wordcard.memory1 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p>
+								<%=wordcard.memory1%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory2 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-42px">
+								<%=wordcard.memory2%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory3 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-84px">
+								<%=wordcard.memory3%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory4 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-126px">
+								<%=wordcard.memory4%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory5 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-168px">
+								<%=wordcard.memory5%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory6 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-210px">
+								<%=wordcard.memory6%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory7 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-252px">
+								<%=wordcard.memory7%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory8 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-296px">
+								<%=wordcard.memory8%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory9 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-338px">
+								<%=wordcard.memory9%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory10 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-380px">
+								<%=wordcard.memory10%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+
+				</div>
+			</div>
+			<div class="back">
+				<img class="reviewflag" style="opacity: 0.3" src="public/images/flags/<%=wordcard.TranslationLanguage.toLowerCase()%>.png">
+				<p class="cardword">
+					<%= wordcard.TargetWord %>
+				</p>
+				<div class="viewmemorycontainer">
+					<%	if (wordcard.memory1 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p>
+								<%=wordcard.memory1%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory2 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="memory1 tick"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-42px">
+								<%=wordcard.memory1%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory3 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-84px">
+								<%=wordcard.memory3%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory4 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-126px">
+								<%=wordcard.memory4%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory5 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-168px">
+								<%=wordcard.memory5%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory6 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-210px">
+								<%=wordcard.memory6%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory7 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-252px">
+								<%=wordcard.memory7%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory8 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-296px">
+								<%=wordcard.memory8%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory9 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-338px">
+								<%=wordcard.memory9%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+					<%	if (wordcard.memory10 !== undefined || null) { %>
+					<span class="tickcontainer">
+						<p class="tick memory1"> ✓ </p>
+						<span class="memory1">
+							<p style="margin-left:-380px">
+								<%=wordcard.memory10%>
+							</p>
+						</span>
+					</span>
+
+					<%} %>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="feedbackbuttons">
+
+		<form class="feedbackbutton" action="/review/<%= wordcard._id%>/easy?_method=PUT" method="POST">
+			<button> Easy</button>
+		</form>
+		<form class="feedbackbutton" action="/review/<%= wordcard._id%>/ok?_method=PUT" method="POST">
+			<button> Ok</button>
+		</form>
+		<form class="feedbackbutton" action="/review/<%= wordcard._id%>/hard?_method=PUT" method="POST">
+			<button> Hard</button>
+		</form>
+
+
+		<button class="addmemory memorybutton"> + </button>
+		<div class="reviewaddmemoryform">
+			<form class="addmemoryfromreview" action="/review/<%= wordcard._id%>/addmemory/?_method=PUT" method="POST""> 
+													<div class="
+			 mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="translation" name="Memory" required autocomplete="off">
+				<label class="mdl-textfield__label" for="memory">Memory</label>
+		</div>
+		<button class="memorybutton"> + </button>
+		</form>
+	</div>
+</div>
+
+<% }) %>
+</div>
+
+
+<!-- // if dailyreview = complete then display a div with a quote or something where I can put a quote or something. 
+ -->
+
+
+
+<%include partials/footer %>

@@ -1,0 +1,715 @@
+
+* {
+  font-family: 'Questrial', sans-serif;
+}
+
+/*a:link {
+  color: #5C3284;
+}*/
+
+
+/* gradient to use later:   background-color: linear-gradient(white, #e2e2e2); */
+
+/*Privacy & Terms */
+.textcontainer{
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-top: 20px;
+}
+
+/*HEADER */
+.headerlanding {
+/*	border-bottom: 1px solid #ddd;*/
+}
+
+.repetitiologo {   
+   	max-height: 80px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.rlogo {   
+   	max-height: 60px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.sexy_line{ 
+    display:block;
+    border:none;
+
+    color:white;
+    height:1px;
+    background:black;
+    min-width: 100%;
+    background: -webkit-gradient(linear, 0 0, 100% 0, from(white), to(white), color-stop(50%, #5C3284));
+}
+
+
+
+
+/*PUBLIC HEADER SPECIFIC */
+
+.loginbutton {
+    margin-top: 20px;
+}
+
+.Rpurple:hover{
+  background-color: transparent;
+}
+
+.joinbutton {
+	margin-top: 20px;
+}
+
+/*PUBLIC FOOTER SPECIFIC */
+
+.footercontainer{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding-right: 40px;
+    padding-bottom: 8px;
+}
+
+.footeritem{
+    padding-left: 20px;
+    color: #a3a3a3;
+}
+
+.footeritem:hover { 
+    text-decoration: none;
+    color: #a3a3a3;
+}
+
+/*LOGGED IN HEADER SPECIFIC*/
+
+/*.usernameattop{
+  position: absolute;
+  color: #a3a3a3;
+  width: 100%;
+  text-align: center;
+  right: 0;
+  left: 0;
+  margin: auto;
+}*/
+
+#navicon {
+	max-height: 75px;
+}
+
+.settingsbutton {
+    margin-top: 20px;
+
+}
+
+.logoutbutton {
+	margin-top: 20px;
+}
+
+.Rpurple{
+  color: #5C3284;
+
+}
+
+.NavGlyph {
+ font-size: 35px;
+
+}
+
+.minicons{
+  margin-top: 30px;
+  display: inline-block;
+  text-align: right;
+  padding-right: 60px;
+  font-size: 20px;
+  padding-right: 30px;
+
+}
+
+.miniconA{
+  padding-right: 20px;
+}
+
+.miniconA:hover
+{   text-decoration: none;}
+
+
+
+/*_______________________________________________________________________________*/
+
+/*LANDING PAGE*/
+
+.content-public {
+ top: 100px;
+  left:0;
+  right:0;
+  bottom:0;
+  position:absolute;
+  overflow-x: hidden;
+
+}
+.large-text {
+  font-size: 62px;
+}
+.input-landing {
+  padding: 20px 40px;
+  text-align: center;
+  font-size: 16px;
+  width: 450px;
+}
+.landing-img {
+  margin: 0 auto;
+}
+
+.landingR{
+  max-height: 80px;
+  margin-top: -63px;
+  margin-right: -10px;
+  margin-left: 5px;
+  padding-right: 2px;
+}
+.landingRXS{
+  
+      max-height: 68px;
+    margin-top: -54px;
+    margin-left: -8px;
+}
+.firstlinelanding {
+
+}
+
+.xslandingrow {
+  margin-bottom: -40px;
+
+/*
+  min-height: 50px;
+  font-size: 30px;*/
+}
+
+.landingh1{
+  display: inline-block;
+  font-family: 'Questrial', sans-serif;
+}
+
+.xslandingh1 {
+  margin-bottom: -30px;
+   font-family: 'Questrial', sans-serif;
+}
+
+.frontpageflagscontainer { 
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-left: 40px;
+    padding-bottom: 30px;
+}
+
+ .frontpageflag{
+  max-height: 40px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  opacity: 0.3;
+
+}
+
+.landingflaglink:hover{
+  text-decoration: none;
+}
+
+/*_______________________________________________________________________________*/
+/*JOIN, RESET AND LOGIN*/
+/*_______________________________________________________________________________*/
+
+.userformcontainer{
+  margin: auto;
+}
+
+.userform{
+  text-align: center;
+  margin-top: 50px;
+}
+
+.userformtitle{
+  font-size: 20px
+}
+
+.userformsubmitbutton{
+  margin-top: 30px;
+}
+
+.resetpasswordtext{ 
+  font-size: 12px;
+ }
+
+/*______________________________________________________________________________*/
+/*LANGUAGE RESOURCE PAGES*/
+
+.languagewhitespace{
+  min-height:70px;
+}
+
+.languagetitle{
+font-weight: 900;
+margin-left: 10px;
+color: #5C3284;
+}
+
+.linkdescription{
+  font-style: italic;
+
+}
+
+.resourcelist{
+    margin-left: -25px;
+}
+
+/*_______________________________________________________________________________*/
+
+/*DASHBOARD*/
+
+.calendarcontainer{
+  /*  min-width: 550px;
+    max-width: 550px;
+    min-height: 200px;
+    max-height: 200px;
+    margin-top: 30px;*/
+  }
+
+  .calendar{
+/*    max-width: 550px;*/
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+    width: 90%;
+  }
+
+.dailyreviewprompt {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.promptText {
+  font-size: 25px;
+}
+
+.dashboardStats {
+  text-align: center;
+}
+
+.dashboardTable {
+  margin: auto;
+  margin-top: 50px;
+  border-bottom: none;
+  max-width: 90%;
+}
+
+.dashboardnumber {
+  font-size: 60px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  
+}
+
+.subtitletd{
+  padding-left: 20px;
+  padding-right: 20px;
+  opacity: 0.6;
+}
+
+/*ADD WORD */
+
+.addbutton {
+
+  margin: 0 auto; 
+  margin-top: 80px;
+/*  font-weight: normal;*/
+  font-size: 14px;
+ 
+
+}
+.flashcard{
+  text-align: center;
+  
+}
+
+
+.content {
+    top: 157px;
+    left:0;
+    right:0;
+    bottom:0;
+    height: -moz-calc(100% - 157px);
+    height: -webkit-calc(100% - 157px);
+    height: calc(100% - 157px);
+    height: 100%;
+
+}
+
+.full-height {
+  height: 100%;
+}
+
+ .cardcontainer {
+  margin: 0 auto;
+    width: 427px;
+    height: 290px;
+    position: relative;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+}
+
+.wordcard {
+
+    width: 100%;
+    background: url(../../public/images/card.png) no-repeat;
+    height: 100%;
+    position: absolute;
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    z-index: 1; 
+
+
+}
+
+.wordcardcontent {
+   
+    height: 100%;
+    width: 100%;
+    color: grey;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 85px;
+
+    }
+
+.mdl-snackbar {
+    
+    max-height: 80px;
+    min-height: 48px;
+    width: auto;
+    position: fixed;
+    right: 50%
+    bottom: 0px;
+    background-color: yellow; }
+
+.mdl-textfield__input{
+border-bottom: 1px solid #fff;
+}
+    
+.mdl-textfield__label{  
+   margin-bottom:0px;
+   color: black;
+ }
+
+
+ .mdl-textfield__input {
+    border-color: black;
+    box-shadow: none;
+}
+
+/*_______________________________________________________________________________*/
+
+/*REVIEW*/
+
+.feedbackbuttons {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+
+}
+
+ 
+.feedbackbutton{
+  display: inline;
+}
+ /* card code */
+
+ .card-container {
+  margin: 0 auto;
+    width: 427px;
+    height: 290px;
+    position: relative;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+    margin-top: 20px;
+}
+.card {
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+
+}
+.card div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 290px;
+    color: grey;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.front {
+  border-radius: 2px;
+  background: url(../../public/images/card.png) no-repeat;
+  -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),
+    0 3px 1px -2px rgba(0,0,0,.2),
+     0 1px 5px 0 rgba(0,0,0,.12);
+}
+.back {
+  border-radius: 2px;
+  background: url(../../public/images/card.png) no-repeat;
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+  transform: rotateY( 180deg );
+  -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.card.flipped {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+/*.carddissappears {
+  display: none;
+}*/
+
+.language {
+  margin-left: 80%;
+}
+
+.cardword {
+  font-size: 20px;
+  margin-top: 150px;
+}
+
+.reviewflag {
+    max-height: 35px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    position: fixed;
+    margin-left: 48%;
+    margin-top: 20px;
+    opacity: 0.7;
+    left: 0;
+    display: inline-block;
+}
+.memoryformcontainer{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+}
+
+.addmemorybutton{
+  margin-left: 95%:
+  margin-top: 100px;
+
+}
+
+.addmemorycontainer{
+  position: absolute;    
+  right: 0;    
+  bottom: 0;    
+  margin-right: 10px;
+  font-size: 22px;"
+}
+
+.viewmemorycontainer{
+  
+  left: 0;    
+  bottom: 0; 
+  min-height: 50px;
+  max-height: 50px;
+  min-width: 100%;
+   
+  
+}
+
+.tickcontainer{
+  display: inline-block;
+  max-height: 50px;
+  max-width: 42px;
+  min-height: 50px;
+  min-width: 42px;
+  float: left;
+
+}
+.tick {
+  margin-top: 20px;
+
+}
+
+span.memory1 {
+   background-color: transparent;
+   text-align: left;
+   margin-top: -110px;
+   display: none;
+   min-width: 300px;
+   max-width: 3000px;
+   color: black;
+   font-style: italic;
+   word-wrap: break-word;
+
+}
+    
+p.memory1:hover + span.memory1 {
+    display: block;
+    
+}
+
+.reviewaddmemoryform{ display:none; }
+
+.addmemoryfromreview{
+  margin-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*_______________________________________________________________________________*/
+
+/*LIBRARY*/
+
+
+.librarybox{
+  min-width: 60%; 
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+}
+
+.infotablerow {
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+.deletebutton{ 
+  margin-top: 15px; 
+}
+
+.libraryflag {
+  max-height: 25px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.libraryflag2 {
+  max-height: 25px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  opacity: 0.5;
+}
+
+.libraryRFactor {
+     max-height: 20px;
+    display: inline-block;
+    margin-right: -6px;
+    margin-bottom: 7px;
+}
+
+.librarytextentry {
+  margin-bottom: -2px;
+}
+
+
+  /*_______________________________________________________________________________*/
+
+/*LIBRARY INDIVIDUAL WORD*/
+
+.Memoriestitle {
+  text-align: center;
+}
+
+.MemoryDisplay { 
+  text-align: center;
+  font-style: italic;
+
+}
+
+.infotable{
+  min-width: 60%; 
+  margin: 0 auto;
+  margin-top: 120px;
+  text-align: left;
+}
+
+.editwordbuttons{
+   font-size: 14px;
+
+   margin-top: 70px;
+}
+
+.editwordform{
+  display: inline-block; 
+  margin-top: -40px;
+  margin-left: 5px;
+}
+/*_______________________________________________________________________________*/
+
+/*SETTINGS*/
+
+.settingscontainer {
+margin: auto;
+text-align: center;}
+
+.flagCheckbox {
+  max-height: 40px;
+}
+
+.flagInput {
+  margin-top: 14px;
+}
+
+.learningsubmitbutton{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+

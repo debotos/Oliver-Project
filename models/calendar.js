@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const CalenderDataSchema = new Schema({
+const CalendarDataSchema = new Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -26,4 +26,4 @@ const CalenderDataSchema = new Schema({
   ]
 });
 
-module.exports = mongoose.model('Calender', CalenderDataSchema);
+module.exports = mongoose.model('Calendar', CalendarDataSchema);

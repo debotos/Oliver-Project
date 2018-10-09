@@ -7,11 +7,11 @@ const moment = require('moment');
 
 var Wordcard = require('../models/wordcards.js');
 var User = require('../models/users.js');
-const Card = require('../models/card');
-const Calender = require('../models/calender');
+const Review = require('../models/review.js');
+const Calendar = require('../models/calendar');
 
 router.get('/library', isLoggedIn, async (req, res) => {
-  const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
+  const todaysWordCardsDoc = await Review.findOne({ author: req.user._id });
   let wordcards = await Wordcard.find({ author: req.user._id });
   const user = await User.findOne(
     { username: req.user.username },
@@ -33,7 +33,7 @@ router.get('/library', isLoggedIn, async (req, res) => {
 });
 
 router.get('/library/:id', isLoggedIn, async (req, res) => {
-  const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
+  const todaysWordCardsDoc = await Review.findOne({ author: req.user._id });
   let todaysCard = todaysWordCardsDoc ? todaysWordCardsDoc.wordcards : [];
   let wordcards = await Wordcard.find({ author: req.user._id });
   const user = await User.findOne(
@@ -127,7 +127,7 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
     'memory10'
   ];
 
-  Card.findOne({ author: req.user._id }).then(userCardDoc => {
+  Review.findOne({ author: req.user._id }).then(userCardDoc => {
     let fieldName = 'memory1'; // default
 
     for (let index = 0; index < dataArray.length; index++) {
@@ -159,12 +159,12 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
 
       let updates = { wordcards: newUserWordscard };
 
-      Card.findOneAndUpdate(
+      Review.findOneAndUpdate(
         { author: req.user._id },
         { $set: updates },
         { new: true }
       )
-        .then(cardUpdated => console.log('Card Updated with memory'))
+        .then(cardUpdated => console.log('Review Updated with memory'))
         .catch(err => console.log('Error: ', err));
     } else {
       console.log('Already have 10 Memory');
@@ -180,8 +180,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -197,33 +197,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -231,38 +231,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -279,8 +279,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -296,33 +296,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -330,38 +330,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -378,8 +378,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -395,33 +395,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -429,38 +429,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -477,8 +477,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -494,33 +494,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -528,38 +528,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -576,8 +576,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -593,33 +593,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -627,38 +627,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -675,8 +675,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -692,33 +692,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -726,38 +726,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -774,8 +774,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -791,33 +791,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -825,38 +825,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -873,8 +873,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -890,33 +890,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -924,38 +924,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -972,8 +972,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -989,33 +989,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -1023,38 +1023,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }
@@ -1071,8 +1071,8 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       if (err) {
         res.send('error');
       } else {
-        // Now everything save, so add +1 point to show in calender
-        Calender.findOne({ author: req.user._id }, function(err, user) {
+        // Now everything save, so add +1 point to show in calendar
+        Calendar.findOne({ author: req.user._id }, function(err, user) {
           if (err) {
             console.log(err);
           } else {
@@ -1088,33 +1088,33 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
             };
 
             if (!user) {
-              // This user yet don't have any activity in calender
+              // This user yet don't have any activity in calendar
               // first create an entry for this user
-              new Calender({
+              new Calendar({
                 author: req.user._id,
                 username: foundUser.username
               })
                 .save()
-                .then(newCalenderDoc => {
+                .then(newCalendarDoc => {
                   // you have to push new item[today]
 
-                  // add data to users model (Calender) data array
-                  Calender.findOne({ author: req.user._id }).then(
-                    calenderDoc => {
-                      calenderDoc.data.unshift(itemToSave);
-                      calenderDoc
+                  // add data to users model (Calendar) data array
+                  Calendar.findOne({ author: req.user._id }).then(
+                    calendarDoc => {
+                      calendarDoc.data.unshift(itemToSave);
+                      calendarDoc
                         .save()
-                        .then(userCalender => res.redirect('back'))
+                        .then(userCalendar => res.redirect('back'))
                         .catch(err => res.status(404).json(err));
                     }
                   );
                 });
             } else {
-              // user already have an entry in calender db
+              // user already have an entry in calendar db
               // console.log(user);
-              let calenderDoc = user;
-              // add data to users model (Calender) data array
-              let daysArray = calenderDoc.data.map(
+              let calendarDoc = user;
+              // add data to users model (Calendar) data array
+              let daysArray = calendarDoc.data.map(
                 singleItem => singleItem.date
               );
 
@@ -1122,38 +1122,38 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
                 // today's entry already have
                 // now you have to just update
 
-                Calender.findOne({ author: req.user._id })
-                  .then(calenderData => {
+                Calendar.findOne({ author: req.user._id })
+                  .then(calendarData => {
                     // Get Update index
-                    const updateIndex = calenderData.data
+                    const updateIndex = calendarData.data
                       .map(item => {
                         // console.log('Item ID => ', item.id);
                         return item.date;
                       })
                       .indexOf(today);
 
-                    let currentCalenderDataArray =
-                      calenderData.data[updateIndex];
+                    let currentCalendarDataArray =
+                      calendarData.data[updateIndex];
 
-                    currentCalenderDataArray.point =
-                      currentCalenderDataArray.point + point; // updating the point(adding 1)
+                    currentCalendarDataArray.point =
+                      currentCalendarDataArray.point + point; // updating the point(adding 1)
 
-                    currentCalenderDataArray.isTodayAlreadyLoggedIn = true;
+                    currentCalendarDataArray.isTodayAlreadyLoggedIn = true;
 
-                    calenderData
+                    calendarData
                       .save()
-                      .then(updatedCalenderData => res.redirect('back'));
+                      .then(updatedCalendarData => res.redirect('back'));
                   })
                   .catch(err => res.status(404).json(err));
               } else {
                 // you have to push new item[today]
 
-                // add data to users model (Calender) data array
-                Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-                  calenderDoc.data.unshift(itemToSave);
-                  calenderDoc
+                // add data to users model (Calendar) data array
+                Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+                  calendarDoc.data.unshift(itemToSave);
+                  calendarDoc
                     .save()
-                    .then(userCalender => res.redirect('back'))
+                    .then(userCalendar => res.redirect('back'))
                     .catch(err => res.status(404).json(err));
                 });
               }

@@ -6,7 +6,7 @@ var router = express.Router();
 var passport = require('passport');
 const moment = require('moment');
 
-const Calender = require('../models/calender');
+const Calendar = require('../models/calendar');
 
 var Wordcard = require('../models/wordcards.js');
 var User = require('../models/users.js');
@@ -34,11 +34,11 @@ router.post(
 );
 
 router.get('/home', isLoggedIn, (req, res) => {
-  // just another redirect so that it can be saved on calender DB
-  // Now everything save, so add +1 point to show in calender
+  // just another redirect so that it can be saved on calendar DB
+  // Now everything save, so add +1 point to show in calendar
 
-  Calender.findOne({ author: req.user._id })
-    .then(userCalenderData => {
+  Calendar.findOne({ author: req.user._id })
+    .then(userCalendarData => {
       let point = 1; // add a word, point 1
       let today = moment().format('DD-MM-YYYY');
       let timestamp = moment().unix();
@@ -49,39 +49,39 @@ router.get('/home', isLoggedIn, (req, res) => {
         isTodayAlreadyLoggedIn: true
       };
 
-      if (!userCalenderData) {
-        // This user yet don't have any activity in calender
+      if (!userCalendarData) {
+        // This user yet don't have any activity in calendar
         // first create an entry for this user
-        new Calender({
+        new Calendar({
           author: req.user._id,
           username: req.user.username
         })
           .save()
-          .then(newCalenderDoc => {
-            // add data to users model (Calender) data array
-            Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-              calenderDoc.data.unshift(itemToSave);
-              calenderDoc
+          .then(newCalendarDoc => {
+            // add data to users model (Calendar) data array
+            Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+              calendarDoc.data.unshift(itemToSave);
+              calendarDoc
                 .save()
-                .then(userCalender => res.redirect('/dashboard'))
+                .then(userCalendar => res.redirect('/dashboard'))
                 .catch(err => res.status(404).json(err));
             });
           });
       } else {
-        // user already have an entry in calender db
-        let calenderDoc = userCalenderData;
-        // add data to users model (Calender) data array
-        let daysArray = calenderDoc.data.map(singleItem => singleItem.date);
+        // user already have an entry in calendar db
+        let calendarDoc = userCalendarData;
+        // add data to users model (Calendar) data array
+        let daysArray = calendarDoc.data.map(singleItem => singleItem.date);
 
         if (!daysArray.includes(today)) {
           // you have to push new item[today]
 
-          // add data to users model (Calender) data array
-          Calender.findOne({ author: req.user._id }).then(calenderDoc => {
-            calenderDoc.data.unshift(itemToSave);
-            calenderDoc
+          // add data to users model (Calendar) data array
+          Calendar.findOne({ author: req.user._id }).then(calendarDoc => {
+            calendarDoc.data.unshift(itemToSave);
+            calendarDoc
               .save()
-              .then(userCalender => res.redirect('/dashboard'))
+              .then(userCalendar => res.redirect('/dashboard'))
               .catch(err => res.status(404).json(err));
           });
         } else {

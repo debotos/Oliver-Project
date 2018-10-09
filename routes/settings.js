@@ -6,10 +6,10 @@ var router = express.Router();
 
 var Wordcard = require('../models/wordcards.js');
 var User = require('../models/users.js');
-const Card = require('../models/card.js');
+const Review = require('../models/review.js');
 
 router.get('/settings', isLoggedIn, async (req, res) => {
-  const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
+  const todaysWordCardsDoc = await Review.findOne({ author: req.user._id });
   const user = await User.findOne(
     { username: req.user.username },
     'dailyReviewComplete'

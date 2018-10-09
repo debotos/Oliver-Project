@@ -6,8 +6,8 @@ var router = express.Router();
 
 var Wordcard = require('../models/wordcards.js');
 var User = require('../models/users.js');
-const Calender = require('../models/calender');
-const Card = require('../models/card');
+const Calendar = require('../models/calendar');
+const Review = require('../models/review.js');
 
 router.get('/dashboard', isLoggedIn, async (req, res) => {
   const wordcards = await Wordcard.find({ author: req.user._id });
@@ -16,15 +16,15 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
     'dailyReviewComplete'
   );
   let todaysCard = [];
-  const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
+  const todaysWordCardsDoc = await Review.findOne({ author: req.user._id });
   // if card collection have the data send it
   if (todaysWordCardsDoc) {
     todaysCard = todaysWordCardsDoc.wordcards;
   } else {
     console.log(
-      'Recalculating everything & saving to Card collection for today future use!'
+      'Recalculating everything & saving to Review collection for today future use!'
     );
-    // calculate the RepetitioFactor and save it to Card collection for today future use
+    // calculate the RepetitioFactor and save it to Review collection for today future use
     const wordcards = await Wordcard.find({ author: req.user._id });
     if (wordcards.length > 0) {
       // pull out the RepetitioFactor value
@@ -66,8 +66,8 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
         finalCards = [...wordcardsUnderPointFiveRepetitioFactor];
       }
       // Now calculation is complete
-      // save the data to Card collection for today future use
-      Card.findOne(
+      // save the data to Review collection for today future use
+      Review.findOne(
         {
           author: req.user._id
         },
@@ -76,16 +76,16 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
             console.log(err);
           } else {
             if (!user) {
-              // This user yet don't have any activity in Card
+              // This user yet don't have any activity in Review
               // first create an entry for this user
-              new Card({
+              new Review({
                 author: req.user._id,
                 username: req.user.username
               })
                 .save()
                 .then(newCardDoc => {
-                  // save the data to Card collection for today future use
-                  Card.findOne({ author: req.user._id }).then(CardDoc => {
+                  // save the data to Review collection for today future use
+                  Review.findOne({ author: req.user._id }).then(CardDoc => {
                     CardDoc.wordcards = [...finalCards];
                     CardDoc.save()
                       .then(userCard => {
@@ -96,7 +96,7 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
                   });
                 });
             } else {
-              Card.findOne({ author: req.user._id }).then(CardDoc => {
+              Review.findOne({ author: req.user._id }).then(CardDoc => {
                 CardDoc.wordcards = [...finalCards];
                 CardDoc.save()
                   .then(userCard => (todaysCard = userCard.wordcards))
@@ -112,15 +112,15 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
   res.render('dashboard', { wordcards, user, todaysCard });
 });
 
-// For calender
+// For calendar
 
-router.get('/calender/data', async (req, res) => {
+router.get('/calendar/data', async (req, res) => {
   console.log('Asking for calendar data => ', req.user);
 
   let response = [];
-  Calender.findOne({ author: req.user._id })
-    .then(userCalenderDoc => {
-      userCalenderDoc.data.forEach(singleItem => {
+  Calendar.findOne({ author: req.user._id })
+    .then(userCalendarDoc => {
+      userCalendarDoc.data.forEach(singleItem => {
         // previous library want
         // let timestamp = singleItem.timestamp;
         // response[timestamp] = singleItem.point;
@@ -130,7 +130,7 @@ router.get('/calender/data', async (req, res) => {
         response.push(dataObj);
       });
       // console.log(response);
-      // check this response, this is the format that the calender need to be feed
+      // check this response, this is the format that the calendar need to be feed
       return res.json(response);
     })
     .catch(err => res.status(404).json(err));

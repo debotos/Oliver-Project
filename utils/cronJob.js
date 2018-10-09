@@ -1,5 +1,5 @@
 const CronJob = require('cron').CronJob;
-const Card = require('../models/card');
+const Card = require('../models/review');
 
 module.exports = function(mongoose) {
   new CronJob(

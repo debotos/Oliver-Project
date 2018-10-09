@@ -20,4 +20,4 @@ const DailyReviewDataSchema = new Schema({
   ]
 });
 
-module.exports = mongoose.model('Card', DailyReviewDataSchema);
+module.exports = mongoose.model('Review', DailyReviewDataSchema);

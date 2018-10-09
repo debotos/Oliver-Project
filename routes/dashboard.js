@@ -115,6 +115,8 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
 // For calender
 
 router.get('/calender/data', async (req, res) => {
+  console.log('Asking for calendar data => ', req.user);
+
   let response = [];
   Calender.findOne({ author: req.user._id })
     .then(userCalenderDoc => {

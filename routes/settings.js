@@ -14,7 +14,7 @@ router.get('/settings', isLoggedIn, async (req, res) => {
     { username: req.user.username },
     'dailyReviewComplete'
   );
-  let todaysCard = todaysWordCardsDoc.wordcards;
+  let todaysCard = todaysWordCardsDoc.wordcards || [];
 
   res.render('settings', { todaysCard, user });
 });

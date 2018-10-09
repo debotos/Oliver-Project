@@ -12,7 +12,7 @@ const Card = require('../models/card.js');
 
 router.get('/add', isLoggedIn, async (req, res) => {
   const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
-  let todaysCard = todaysWordCardsDoc.wordcards || [];
+  let todaysCard = todaysWordCardsDoc ? todaysWordCardsDoc.wordcards : [];
   User.findById(req.user._id, (err, result) => {
     res.render('add', { user: result, todaysCard });
   });

@@ -16,7 +16,7 @@ router.get('/review', isLoggedIn, async (req, res) => {
     { username: req.user.username },
     'dailyReviewComplete'
   );
-  let todaysCard = todaysWordCardsDoc.wordcards || [];
+  let todaysCard = todaysWordCardsDoc ? todaysWordCardsDoc.wordcards : [];
   // if card collection have the data send it
   if (todaysWordCardsDoc) {
     console.log('Sending data from Card collection!');

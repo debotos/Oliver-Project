@@ -32,12 +32,24 @@ router.get('/library', isLoggedIn, async (req, res) => {
   res.render('library', { wordcards, todaysCard, user });
 });
 
-router.get('/library/:id', isLoggedIn, (req, res) => {
+router.get('/library/:id', isLoggedIn, async (req, res) => {
+  const todaysWordCardsDoc = await Card.findOne({ author: req.user._id });
+  let todaysCard = todaysWordCardsDoc ? todaysWordCardsDoc.wordcards : [];
+  let wordcards = await Wordcard.find({ author: req.user._id });
+  const user = await User.findOne(
+    { username: req.user.username },
+    'dailyReviewComplete'
+  );
   Wordcard.findById(req.params.id, function(err, foundWordcard) {
     if (err) {
       res.redirect('/library');
     } else {
-      res.render('editwordcard', { wordcard: foundWordcard });
+      res.render('editwordcard', {
+        wordcards,
+        user,
+        todaysCard,
+        wordcard: foundWordcard
+      });
     }
   });
 });

@@ -3,10 +3,10 @@ const Card = require('../models/review');
 
 module.exports = function(mongoose) {
   new CronJob(
-    '00 00 00 * * *',
+    '0 0 0 * * *',
     function() {
       /*
-      * Runs everyday midnight
+      * Runs everyday midnight(12:00 AM)
       * at 00:00:00 AM. 
       */
       console.log('Dropping the Card Collection from DB.');
@@ -27,6 +27,8 @@ module.exports = function(mongoose) {
 };
 
 // Example:
+// cronTime: '* * * * * *' => Executes every seconds
+
 // cronTime: '00 00 00 * * *' => Executes eveyday midnight
 
 // cronTime: '00 */3 * * * * ' => Executes in every 3 seconds.

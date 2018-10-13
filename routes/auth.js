@@ -7,7 +7,7 @@ var passport = require('passport');
 const moment = require('moment');
 
 const Calendar = require('../models/calendar');
-
+const Review = require('../models/review');
 var Wordcard = require('../models/wordcards.js');
 var User = require('../models/users.js');
 
@@ -33,7 +33,103 @@ router.post(
   function(req, res) {}
 );
 
-router.get('/home', isLoggedIn, (req, res) => {
+router.get('/home', isLoggedIn, async (req, res) => {
+  let todaysCard = [];
+  const todaysWordCardsDoc = await Review.findOne({
+    author: req.user._id
+  });
+  // if card collection have the data send it
+  if (!todaysWordCardsDoc) {
+    console.log(
+      'Recalculating everything & saving to Review collection for today future use!'
+    );
+    // calculate the RepetitioFactor and save it to Review collection for today future use
+    const wordcards = await Wordcard.find({
+      author: req.user._id
+    });
+    if (wordcards.length > 0) {
+      // pull out the RepetitioFactor value
+      let wordcardsWithRepetitioFactor = wordcards.map(x => {
+        return {
+          ...x._doc,
+          repetitioFactor: x.get('RepetitioFactor'),
+          reviewed: false
+        };
+      });
+      // get the maxReview of current user
+      let maxReview = await User.findOne({
+        username: req.user.username
+      }).then(user => user.maxReview);
+      console.log('Max Review from auth.js, ', maxReview);
+      if (!maxReview) {
+        return res.redirect('/dashboard');
+      }
+      // get the RepetitioFactor under 0.5 and over 0.5
+      let wordcardsUnderPointFiveRepetitioFactor = [];
+      let wordcardsOverPointFiveRepetitioFactor = [];
+      wordcardsWithRepetitioFactor.forEach(singleCard => {
+        if (parseFloat(singleCard.repetitioFactor) < 0.5) {
+          wordcardsUnderPointFiveRepetitioFactor.push(singleCard);
+        } else {
+          wordcardsOverPointFiveRepetitioFactor.push(singleCard);
+        }
+      });
+
+      let finalCards = [];
+      if (wordcardsUnderPointFiveRepetitioFactor.length >= maxReview) {
+        for (let index = 0; index < maxReview; index++) {
+          finalCards.push(wordcardsUnderPointFiveRepetitioFactor[index]);
+        }
+      } else {
+        finalCards = [...wordcardsUnderPointFiveRepetitioFactor];
+      }
+      // Now calculation is complete
+      // save the data to Review collection for today future use
+      Review.findOne(
+        {
+          author: req.user._id
+        },
+        function(err, user) {
+          if (err) {
+            console.log(err);
+          } else {
+            if (!user) {
+              // This user yet don't have any activity in Review
+              // first create an entry for this user
+              new Review({
+                author: req.user._id,
+                username: req.user.username
+              })
+                .save()
+                .then(newCardDoc => {
+                  // save the data to Review collection for today future use
+                  Review.findOne({
+                    author: req.user._id
+                  }).then(CardDoc => {
+                    CardDoc.wordcards = [...finalCards];
+                    CardDoc.save()
+                      .then(userCard => {
+                        // console.log(userCard.wordcards);
+                        todaysCard = userCard.wordcards;
+                      })
+                      .catch(err => res.status(404).json(err));
+                  });
+                });
+            } else {
+              Review.findOne({
+                author: req.user._id
+              }).then(CardDoc => {
+                CardDoc.wordcards = [...finalCards];
+                CardDoc.save()
+                  .then(userCard => (todaysCard = userCard.wordcards))
+                  .catch(err => res.status(404).json(err));
+              });
+            }
+          }
+        }
+      );
+    }
+  }
   // just another redirect so that it can be saved on calendar DB
   // Now everything save, so add +1 point to show in calendar
 

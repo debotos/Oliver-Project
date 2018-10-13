@@ -75,7 +75,7 @@ app.use(addWordRoutes);
 app.use(indexRoutes);
 
 //setup the server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port, function() {
-  console.log('Server started at localhost:5000. Ctrl+C to exit.');
+  console.log('Server started at localhost:5001. Ctrl+C to exit.');
 });

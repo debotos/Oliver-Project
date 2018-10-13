@@ -1,23 +1,37 @@
 const CronJob = require('cron').CronJob;
-const Card = require('../models/review');
+const Review = require('../models/review');
+const User = require('../models/users');
 
 module.exports = function(mongoose) {
   new CronJob(
-    '0 0 0 * * *',
+    '00 00 00 * * *',
     function() {
       /*
       * Runs everyday midnight(12:00 AM)
       * at 00:00:00 AM. 
       */
-      console.log('Dropping the Card Collection from DB.');
-      // Drop the 'Card' collection from the database
-      mongoose.connection.db.dropCollection('cards', function(err, result) {
+      console.log('Dropping the Review Collection from DB.');
+      // Remove all doc from 'Review' collection from the database
+      Review.remove({}, function(err) {
         if (err) {
-          console.log('Cron Job Error! Card Collection Already Empty! ');
+          console.log(err);
         } else {
-          console.log('Cron Job Success:', result);
+          console.log('Successfully removed all document from collection.');
         }
       });
+      // set dailyReviewComplete:false & reviewedAmount:0
+      User.update(
+        {},
+        { dailyReviewComplete: false, reviewedAmount: 0 },
+        { multi: true },
+        function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Reset Complete!');
+          }
+        }
+      );
     },
     function() {
       /* This function is executed when the job stops */

@@ -37,7 +37,7 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
       });
       // get the maxReview of current user
       let maxReview = await User.findOne({ username: req.user.username }).then(
-        user => user.maxReview
+        userDocument => userDocument.maxReview
       );
       if (!maxReview) {
         return res.render('dashboard', {
@@ -71,11 +71,11 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
         {
           author: req.user._id
         },
-        function(err, user) {
+        function(err, dbuser) {
           if (err) {
             console.log(err);
           } else {
-            if (!user) {
+            if (!dbuser) {
               // This user yet don't have any activity in Review
               // first create an entry for this user
               new Review({
@@ -91,6 +91,11 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
                       .then(userCard => {
                         // console.log(userCard.wordcards);
                         todaysCard = userCard.wordcards;
+                        return res.render('dashboard', {
+                          wordcards,
+                          user,
+                          todaysCard
+                        });
                       })
                       .catch(err => res.status(404).json(err));
                   });
@@ -99,13 +104,26 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
               Review.findOne({ author: req.user._id }).then(CardDoc => {
                 CardDoc.wordcards = [...finalCards];
                 CardDoc.save()
-                  .then(userCard => (todaysCard = userCard.wordcards))
+                  .then(userCard => {
+                    todaysCard = userCard.wordcards;
+                    return res.render('dashboard', {
+                      wordcards,
+                      user,
+                      todaysCard
+                    });
+                  })
                   .catch(err => res.status(404).json(err));
               });
             }
           }
         }
       );
+    } else {
+      return res.render('dashboard', {
+        wordcards,
+        user,
+        todaysCard
+      });
     }
   }
   // console.log({ wordcards, user, todaysCard });
@@ -115,7 +133,7 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
 // For calendar
 
 router.get('/calendar/data', async (req, res) => {
-  console.log('Asking for calendar data => ', req.user);
+  // console.log('Asking for calendar data => ', req.user);
 
   let response = [];
   Calendar.findOne({ author: req.user._id })

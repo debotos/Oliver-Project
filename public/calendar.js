@@ -417,7 +417,7 @@ if (!Array.prototype.find) {
 
 $(document).ready(function() {
   $.ajax({
-    url: 'https://henry-demo.herokuapp.com/calendar/data', //'http://localhost:5000/calendar/data'
+    url: 'http://localhost:5000/calendar/data', // 'https://henry-demo.herokuapp.com/calendar/data'
     cache: false,
     success: function(res) {
       console.log(res);

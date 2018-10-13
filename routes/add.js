@@ -78,7 +78,7 @@ router.post('/add/new', isLoggedIn, function(req, res) {
                     })
                       .save()
                       .then(newCalendarDoc => {
-                        console.log(newCalendarDoc);
+                        // console.log(newCalendarDoc);
 
                         // you have to push new item[today]
 

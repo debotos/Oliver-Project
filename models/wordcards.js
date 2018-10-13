@@ -41,14 +41,28 @@ WordcardSchema.virtual('daysSinceReview').get(function() {
 });
 
 // calc Interval
+// Real
+// WordcardSchema.virtual('interval').get(function() {
+//   if (this.nthInterval == 1) {
+//     var x = 1;
+//     return x.toFixed(0);
+//   }
+//   if (this.nthInterval == 2) {
+//     var x = 6;
+//     return x.toFixed(0);
+//   } else {
+//     var x = (this.nthInterval - 1) * this.easeFactor;
+//     return x.toFixed(0);
+//   }
+// });
 WordcardSchema.virtual('interval').get(function() {
   if (this.nthInterval == 1) {
-    var x = 1;
-    return x.toFixed(0);
+    var x = 0.002;
+    return x;
   }
   if (this.nthInterval == 2) {
-    var x = 6;
-    return x.toFixed(0);
+    var x = 0.1;
+    return x;
   } else {
     var x = (this.nthInterval - 1) * this.easeFactor;
     return x.toFixed(0);

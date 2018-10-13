@@ -25,7 +25,7 @@ router.post('/user/nativelanguage', isLoggedIn, async (req, res) => {
     nativeLanguage: req.body.nativelanguage,
     dailyMaxReview: req.body.maxReview
   };
-  console.log(obj);
+  // console.log(obj);
 
   User.findByIdAndUpdate(
     req.user._id,

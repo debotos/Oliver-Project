@@ -93,7 +93,7 @@ router.get('/review', isLoggedIn, async (req, res) => {
       } else {
         finalCards = [...wordcardsUnderPointFiveRepetitioFactor];
       }
-      console.log('Final Cards', finalCards);
+      // console.log('Final Cards', finalCards);
 
       // Now calculation is complete
       // save the data to Review collection for today future use

@@ -147,7 +147,7 @@ router.put('/library/:id/addmemory', isLoggedIn, async (req, res) => {
       }
     }
 
-    console.log('Field Name: ', fieldName);
+    // console.log('Field Name: ', fieldName);
 
     if (fieldName) {
       newUserWordscard = userCardDoc.wordcards.map(singleCard => {

@@ -16,7 +16,7 @@ const CalendarDataSchema = new Schema({
     {
       date: String,
       timestamp: String,
-      datetime: { type: Date, default: new Date() },
+      datetime: { type: Date, default: Date.now },
       point: Number,
       isTodayAlreadyLoggedIn: {
         type: Boolean,

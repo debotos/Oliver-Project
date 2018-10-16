@@ -155,6 +155,12 @@ router.get('/review', isLoggedIn, async (req, res) => {
 //---PUT routes
 
 router.put('/review/:id/easy', isLoggedIn, async (req, res) => {
+  let currentUserReviewDoc = await Review.findOne(
+    { author: req.user._id },
+    'wordcards'
+  );
+  let amountLeft = currentUserReviewDoc.wordcards.length;
+
   // mark this card as reviewed
   Review.findOne({ author: req.user._id }).then(userCardDoc => {
     let newUserWordscard = [];
@@ -209,7 +215,9 @@ router.put('/review/:id/easy', isLoggedIn, async (req, res) => {
             let dailyReviewComplete = currentUserDoc.dailyReviewComplete;
 
             // increse reviewedAmount
-            let amountLeft = maxReview - reviewedAmount;
+
+            console.log(amountLeft);
+
             if (amountLeft === 1 && !dailyReviewComplete) {
               point = 6; // five for complete the all daily review & 1 for the current review
               dailyReviewComplete = true;
@@ -324,6 +332,11 @@ router.put('/review/:id/easy', isLoggedIn, async (req, res) => {
 });
 
 router.put('/review/:id/ok', isLoggedIn, async (req, res) => {
+  let currentUserReviewDoc = await Review.findOne(
+    { author: req.user._id },
+    'wordcards'
+  );
+  let amountLeft = currentUserReviewDoc.wordcards.length;
   // mark this card as reviewed
   Review.findOne({ author: req.user._id }).then(userCardDoc => {
     let newUserWordscard = [];
@@ -377,7 +390,7 @@ router.put('/review/:id/ok', isLoggedIn, async (req, res) => {
             let dailyReviewComplete = currentUserDoc.dailyReviewComplete;
 
             // increse reviewedAmount
-            let amountLeft = maxReview - reviewedAmount;
+
             if (amountLeft === 1 && !dailyReviewComplete) {
               point = 6; // five for complete the all daily review & 1 for the current review
               dailyReviewComplete = true;
@@ -490,6 +503,11 @@ router.put('/review/:id/ok', isLoggedIn, async (req, res) => {
 });
 
 router.put('/review/:id/hard', isLoggedIn, async (req, res) => {
+  let currentUserReviewDoc = await Review.findOne(
+    { author: req.user._id },
+    'wordcards'
+  );
+  let amountLeft = currentUserReviewDoc.wordcards.length;
   // mark this card as reviewed
   Review.findOne({ author: req.user._id }).then(userCardDoc => {
     let newUserWordscard = [];
@@ -543,7 +561,7 @@ router.put('/review/:id/hard', isLoggedIn, async (req, res) => {
             let dailyReviewComplete = currentUserDoc.dailyReviewComplete;
 
             // increse reviewedAmount
-            let amountLeft = maxReview - reviewedAmount;
+
             if (amountLeft === 1 && !dailyReviewComplete) {
               point = 6; // five for complete the all daily review & 1 for the current review
               dailyReviewComplete = true;
